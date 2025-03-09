@@ -23,7 +23,7 @@ services:
   
   traefik: 
     image: "traefik:latest"
-    container_name: "traefik"
+    container_name: "traefik-acme"
     command: 
       - "--api.dashboard=true"
       - "--providers.docker=true"
