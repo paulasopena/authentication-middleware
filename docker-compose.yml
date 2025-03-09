@@ -52,22 +52,22 @@ services:
     container_name: whoami_unsecure
     labels: 
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`unsecure.whoami.acme.se`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
-      - "traefik.http.routers.whoami.tls=true"
-      - "traefik.http.routers.whoami.middlewares=authelia@docker"
+      - "traefik.http.routers.whoami_unsecure.rule=Host(`unsecure.whoami.acme.se`)"
+      - "traefik.http.routers.whoami_unsecure.entrypoints=websecure"
+      - "traefik.http.routers.whoami_unsecure.tls.certresolver=myresolver"
+      - "traefik.http.routers.whoami_unsecure.tls=true"
+      - "traefik.http.routers.whoami_unsecure.middlewares=authelia@docker"
   
   whoami_secure:
     image: traefik/whoami
     container_name: whoami_secure
     labels: 
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`secure.whoami.acme.se`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
-      - "traefik.http.routers.whoami.tls=true"
-      - "traefik.http.routers.whoami.middlewares=authelia@docker"
+      - "traefik.http.routers.whoami_secure.rule=Host(`secure.whoami.acme.se`)"
+      - "traefik.http.routers.whoami_secure.entrypoints=websecure"
+      - "traefik.http.routers.whoami_secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.whoami_secure.tls=true"
+      - "traefik.http.routers.whoami_secure.middlewares=authelia@docker"
     
   webserver: 
     build:
@@ -76,11 +76,11 @@ services:
     container_name: 'webserver-acme'
     labels: 
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`webserver.acme.se`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
-      - "traefik.http.routers.whoami.tls=true"
-      - "traefik.http.routers.whoami.middlewares=authelia@docker"
+      - "traefik.http.routers.webserver.rule=Host(`webserver.acme.se`)"
+      - "traefik.http.routers.webserver.entrypoints=websecure"
+      - "traefik.http.routers.webserver.tls.certresolver=myresolver"
+      - "traefik.http.routers.webserver.tls=true"
+      - "traefik.http.routers.webserver.middlewares=authelia@docker"
 
 
 
