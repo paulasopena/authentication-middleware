@@ -68,6 +68,20 @@ services:
       - "traefik.http.routers.whoami.tls.certresolver=myresolver"
       - "traefik.http.routers.whoami.tls=true"
       - "traefik.http.routers.whoami.middlewares=authelia@docker"
+    
+  webserver: 
+    build:
+        context: './webserver'
+        dockerfile: 'Dockerfile'
+    container_name: 'webserver_acme'
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`webserver.acme.se`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+      - "traefik.http.routers.whoami.tls=true"
+      - "traefik.http.routers.whoami.middlewares=authelia@docker"
+
 
 
       
