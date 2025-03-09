@@ -48,8 +48,6 @@ services:
       - "traefik.http.routers.traefik.tls.certresolver=myresolver"
       - "traefik.http.routers.traefik.middlewares=traefik-auth"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$14C1oB3W$1BfKVrmaMtmGp3u62v2yR/"
-    networks:
-      - net
 
   whoami_unsecure: 
     image: traefik/whoami
@@ -78,8 +76,6 @@ services:
         context: './webserver'
         dockerfile: 'Dockerfile'
     container_name: 'webserver-acme'
-    networks: 
-      - net
     labels: 
       - "traefik.enable=true"
       - "traefik.http.routers.webserver.rule=Host(`webserver.acme.se`)"
@@ -88,9 +84,4 @@ services:
       - "traefik.http.routers.webserver.tls=true"
       - "traefik.http.routers.webserver.middlewares=authelia@docker"
 
-
-networks: 
-  net: 
-    driver: bridge
-      
     
