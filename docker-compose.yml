@@ -5,13 +5,15 @@ services:
     container_name: "authelia-acme"
     volumes: 
       - ./authelia/config:/config
+    networks: 
+      - net
     labels: 
       - "traefik.enable=true"
       - "traefik.http.routers.authelia.rule=Host(`authelia.acme.se`)"
       - "traefik.http.routers.authelia.entrypoints=websecure"
       - "traefik.http.routers.authelia.tls=true"
       - "traefik.http.routers.authelia.tls.certresolver=myresolver"
-      - "traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=https://authelia.acme.se"
+      - "traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=http://authelia.acme.se"
       - "traefik.http.middlewares.authelia.forwardauth.trustforwardHeader=true"
       - "traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Email"
     expose: 
@@ -74,6 +76,8 @@ services:
         context: './webserver'
         dockerfile: 'Dockerfile'
     container_name: 'webserver-acme'
+    networks: 
+      - net
     labels: 
       - "traefik.enable=true"
       - "traefik.http.routers.webserver.rule=Host(`webserver.acme.se`)"
@@ -83,6 +87,8 @@ services:
       - "traefik.http.routers.webserver.middlewares=authelia@docker"
 
 
-
+networks: 
+  net: 
+    driver: bridge
       
     
