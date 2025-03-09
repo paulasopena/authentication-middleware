@@ -12,9 +12,9 @@ services:
       - "traefik.http.routers.authelia.tls=true"
       - "traefik.http.routers.authelia.tls.certresolver=myresolver"
       - "traefik.http.services.authelia.loadbalancer.server.port=9091"
-      - "traefik.http.middlewares.authelia.forwardAuth.address=http://authelia:9091/api/verify?rd=https://authelia.acme.se"
-      - "traefik.http.middlewares.authelia.truthForwardHeader=true"
-      - "traefik.http.middlewares.authelia.forwardAuth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Email"
+      - "traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=https://authelia.acme.se"
+      - "traefik.http.middlewares.authelia.truthforwardHeader=true"
+      - "traefik.http.middlewares.authelia.forwardauth.authresponseHeaders=Remote-User,Remote-Groups,Remote-Email"
     expose: 
       - 9091
     restart: unless-stopped
@@ -56,8 +56,8 @@ services:
       - "traefik.http.routers.whoami.rule=Host(`unsecure.whoami.acme.se`)"
       - "traefik.http.routers.whoami.entrypoints=websecure"
       - "traefik.http.routers.whoami.tls.certresolver=myresolver"
-      - "traefik.http.routers.whoammi.tls=true"
-      - "traefik.http.services.whoami.middlewares=authelia@docker"
+      - "traefik.http.routers.whoami.tls=true"
+      - "traefik.http.routers.whoami.middlewares=authelia@docker"
   
   whoami_secure:
     image: traefik/whoami
@@ -67,8 +67,8 @@ services:
       - "traefik.http.routers.whoami.rule=Host(`secure.whoami.acme.se`)"
       - "traefik.http.routers.whoami.entrypoints=websecure"
       - "traefik.http.routers.whoami.tls.certresolver=myresolver"
-      - "traefik.http.routers.whoammi.tls=true"
-      - "traefik.http.services.whoami.middlewares=authelia@docker"
+      - "traefik.http.routers.whoami.tls=true"
+      - "traefik.http.routers.whoami.middlewares=authelia@docker"
 
 
       
