@@ -73,7 +73,7 @@ services:
     build:
         context: './webserver'
         dockerfile: 'Dockerfile'
-    container_name: 'webserver_acme'
+    container_name: 'webserver-acme'
     labels: 
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`webserver.acme.se`)"
