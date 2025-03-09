@@ -1,0 +1,52 @@
+services: 
+
+  authelia: 
+    image: authelia/authelia
+    container_name: authelia
+    volumes: 
+      - ./authelia/config:/config
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.routers.authelia.rule=Host(`authelia.acme.se`)"
+      - "traefik.http.routers.authelia.entrypoints=websecure"
+      - "traefik.http.routers.authelia.tls=true"
+      - "traefik.http.routers.authelia.tls.certresolver=myresolver"
+      - "traefik.http.services.authelia.loadbalancer.server.port=9091"
+      - "traefik.http.middlewares.authelia.forwardAuth.address=http://authelia:9091/api/verify?rd=https://authelia.acme.se:9091"
+      - "traefik.http.middlewares.authelia.truthForwardHeader=true"
+      - "traefik.http.middlewares.authelia.forwardAuth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Email"
+    expose: 
+      - 9091
+    restart: unless-stopped
+    environment: 
+      - TZ=Europe/Stockholm
+  
+  traefik: 
+    image: "traefik:latest"
+    container_name: "traefik"
+    command: 
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=psopena@kth.se"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports: 
+      - "80:80"
+      - "443:443"
+    volumes: 
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.acme.se`)"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.tls.certresolver=myresolver"
+      - "traefik.http.routers.traefik.middlewares=traefik-auth"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$apr1$14C1oB3W$1BfKVrmaMtmGp3u62v2yR/
+
+      
+    
