@@ -12,7 +12,7 @@ services:
       - "traefik.http.routers.authelia.tls=true"
       - "traefik.http.routers.authelia.tls.certresolver=myresolver"
       - "traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=https://authelia.acme.se"
-      - "traefik.http.middlewares.authelia.truthforwardHeader=true"
+      - "traefik.http.middlewares.authelia.trustforwardHeader=true"
       - "traefik.http.middlewares.authelia.forwardauth.authresponseHeaders=Remote-User,Remote-Groups,Remote-Email"
     expose: 
       - 9091
