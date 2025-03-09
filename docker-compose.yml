@@ -2,7 +2,7 @@ services:
 
   authelia: 
     image: authelia/authelia
-    container_name: authelia
+    container_name: "authelia-acme"
     volumes: 
       - ./authelia/config:/config
     labels: 
