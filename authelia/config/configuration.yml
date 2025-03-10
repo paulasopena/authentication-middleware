@@ -3,8 +3,26 @@ log.level: debug
 jwt_secret: insecure_secret
 
 authentication_backend:
-  file:
-    path: /config/users_database.yml
+  disable_reset_password: false
+  refresh_interval: 5m
+  ldap:
+    implementation: custom
+    url: ldaps://ipasrv.acme.se
+    start_tls: false
+    tls:
+      skip_verify: true
+      minimum_version: TLS1.2
+    base_dn: dc=acme,dc=se
+    username_attribute: uid
+    additional_users_dn: cn=users,cn=accounts
+    users_filter: "(&({username_attribute}={input})(|(objectClass=person)(objectClass=posixAccount)))"
+    additional_groups_dn: cn=groups,cn=accounts
+    groups_filter: "(&(member=uid={input},cn=users,cn=accounts,dc=acme,dc=se)(objectClass=groupOfNames))"
+    group_name_attribute: cn
+    mail_attribute: mail
+    display_name_attribute: givenName
+    user: uid=admin,cn=users,cn=accounts,dc=acme,dc=se
+    password: NilsSmokesCoke2025!
     
 totp:
   disable: true
