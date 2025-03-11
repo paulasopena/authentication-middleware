@@ -53,6 +53,8 @@ access_control:
       policy: two_factor
     - domain: secure.whoami.acme.se
       policy: one_factor
+    - domain: public.acme.se
+      policy: bypass
 
 notifier:
   filesystem:

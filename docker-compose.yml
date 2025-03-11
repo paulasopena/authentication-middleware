@@ -81,6 +81,18 @@ services:
       - "traefik.http.routers.webserver.tls.certresolver=myresolver"
       - "traefik.http.routers.webserver.tls=true"
       - "traefik.http.routers.webserver.middlewares=authelia@docker"
+
+  backend: 
+    container_name: "backend-acme"
+    build: 
+      context: "./backend"
+      dockerfile: "Dockerfile"
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`backend.acme.se`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls.certresolver=myresolver"
+      - "traefik.http.routers.backend.tls=true"
   
 
     
