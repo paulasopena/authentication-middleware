@@ -25,7 +25,10 @@ authentication_backend:
     password: NilsSmokesCoke2025!
     
 totp:
-  disable: true
+  issuer: authelia
+  period: 30
+  skew: 1
+  secret_size: 32
   
 session:
   name: authelia_session
@@ -47,7 +50,7 @@ access_control:
     - domain: unsecure.whoami.acme.se
       policy: bypass
     - domain: webserver.acme.se
-      policy: one_factor
+      policy: two_factor
     - domain: secure.whoami.acme.se
       policy: one_factor
 

@@ -11,7 +11,7 @@ services:
       - "traefik.http.routers.authelia.entrypoints=websecure"
       - "traefik.http.routers.authelia.tls=true"
       - "traefik.http.routers.authelia.tls.certresolver=myresolver"
-      - "traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=http://authelia.acme.se"
+      - "traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=https://authelia.acme.se"
       - "traefik.http.middlewares.authelia.forwardauth.trustforwardHeader=true"
       - "traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Email"
     expose: 
@@ -81,5 +81,6 @@ services:
       - "traefik.http.routers.webserver.tls.certresolver=myresolver"
       - "traefik.http.routers.webserver.tls=true"
       - "traefik.http.routers.webserver.middlewares=authelia@docker"
+  
 
     
