@@ -93,7 +93,11 @@ services:
       - "3001:3001"
     labels: 
       - "traefik.enable=true"
+      - "traefik.http.middlewares.cors.headers.customresponseheaders.Access-Control-Allow-Origin=https://*.acme.se"
+      - "traefik.http.middlewares.cors.headers.customresponseheaders.Access-Control-Allow-Methods=*"
+      - "traefik.http.middlewares.cors.headers.customresponseheaders.Access-Control-Allow-Headers=*"
       - "traefik.http.routers.backend.rule=Host(`backend.acme.se`)"
+      - "traefik.http.routers.backend.middlewares=cors"
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.routers.backend.tls.certresolver=myresolver"
       - "traefik.http.routers.backend.tls=true"
