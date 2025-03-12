@@ -73,6 +73,8 @@ services:
     build:
         context: './webserver'
         dockerfile: 'Dockerfile'
+    ports: 
+      - "3000:3000"
     container_name: 'webserver-acme'
     labels: 
       - "traefik.enable=true"
@@ -87,6 +89,8 @@ services:
     build: 
       context: "./backend"
       dockerfile: "Dockerfile"
+    ports: 
+      - "3001:3001"
     labels: 
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`backend.acme.se`)"

@@ -1,7 +1,21 @@
 import express, { Request, Response, NextFunction } from 'express';
 import requestIp from 'request-ip';
+import cors from 'cors';
 
 const app = express();
+const allowedOrigins = ['https://webserver.acme.se', 'https://backend.acme.se'];
+
+const corsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    if (allowedOrigins.includes(origin!)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+
+app.use(cors(corsOptions));
 
 const allowedIps: string[] = [
     '127.0.0.1',

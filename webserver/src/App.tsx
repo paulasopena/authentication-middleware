@@ -7,7 +7,7 @@ function App() {
   const [isFriend, setIsFriend] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:3001')  // Make a request to the backend
+    fetch('https://backend.acme.se')  // Make a request to the backend
       .then((response) => {
         if (response.ok) {
           setIsFriend(true);
